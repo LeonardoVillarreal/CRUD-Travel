@@ -1,0 +1,58 @@
+service: crud-travel
+frameworkVersion: '3'
+
+plugins:
+  - serverless-auto-swagger
+  - serverless-dotenv-plugin
+  - serverless-offline
+  
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  memorySize: 128
+  stage: ${opt:stage, 'dev'}
+
+functions:
+  createFare:
+    handler: src/handlers/createFare.handler
+    events:
+      - httpApi:
+          path: /fares
+          method: POST
+
+  findAll:
+    handler: src/handlers/findAll.handler
+    events:
+      - httpApi:
+          path: /fares
+          method: GET
+
+  findFare:
+    handler: src/handlers/findFare.handler
+    events:
+      - httpApi:
+          path: /fares/{id}
+          method: GET
+
+  updateFare:
+    handler: src/handlers/updateFare.handler
+    events:
+      - httpApi:
+          path: /fares/{id}
+          method: PUT
+
+  deleteFare:
+    handler: src/handlers/deleteFare.handler
+    events:
+      - httpApi:
+          path: /fares/{id}
+          method: DELETE
+
+  countryDisplay:
+    handler: src/handlers/countryDisplay.handler
+    events:
+      - httpApi:
+          path: /fares/country
+          method: POST
